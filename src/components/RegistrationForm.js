@@ -50,10 +50,9 @@ const RegistrationForm = () => {
         // 1.2 If there are no errors, set the state to "loading"
         else {
             setState("loading");
-            setErrorsState([]);
-            // 2.1 If the submission is successful, set state to "successful"
-            // Make a fetch request 
-            
+            setErrorsState([]);     
+
+            // Make a fetch request             
             formData.append('firstName',firstNameField.value);
             formData.append('lastName',lastNameField.value);
             formData.append('email',emailField.value);
@@ -67,10 +66,24 @@ const RegistrationForm = () => {
                     body : formData
                 }
             )
-            .then()
-            .then()
-            .catch();
-            // 2.2 If the submission is successful, set state to "unsucessful"
+            // The .json() method will convert a 'stringified' object to a JS object
+            .then(
+                (backendResponseJSON) => backendResponseJSON.json()                
+            )
+            // 2.1 If the submission is successful, set the state to 'successful
+            .then(
+                (backendResponse) =>{
+                if(backendResponse.status === 'successful') {
+                    setState('successful');
+                }else{
+                    setState('unsuccessful');
+                }
+            }) 
+            // 2.2 If the submission is unsuccessful, set state to "unsucessful"           
+            .catch(err => {
+                console.log(err);
+                setState('unsuccessful');
+            });            
         }
 
     }
@@ -136,16 +149,18 @@ const RegistrationForm = () => {
 
                 </div>
             }
-
             {
                 state === "successful" &&
                 <div className="alert alert-success">You have a successfully created an account</div>
+            }    
+            {
+                state === "unsuccessful" &&
+                <div className="alert alert-danger">An account already exists with this email</div>
             }
-
             {
                 state === "loading" &&
                 <p>Loading...</p>
-            }
+            }            
         </div>
     )
 };
