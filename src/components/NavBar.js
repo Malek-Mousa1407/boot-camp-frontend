@@ -6,8 +6,8 @@ function NavBar(props) {
             <div className="container-fluid">
                 <span className="navbar-brand mb-0 h1">{props.logo}</span>
                 <div className='d-flex'>
-                    <ReactLink className="btn btn-primary mx-1" to='/'>Home</ReactLink>
-                    <ReactLink className="btn btn-primary mx-1" to='/register'>Registration</ReactLink>
+                    <ReactLink className="btn btn-success mx-1" to='/'>Home</ReactLink>
+                    <ReactLink className="btn btn-danger mx-1" to='/register'>Registration</ReactLink>
                 </div>
             </div>
         </nav>
